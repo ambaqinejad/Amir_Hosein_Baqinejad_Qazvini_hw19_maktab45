@@ -8,7 +8,8 @@ require('dotenv').config();
 const path = require('path');
 
 // My own modules
-
+const bloggerRouter = require(path.join(__dirname, 'routes', 'blogger.js'));
+const authRouter = require(path.join(__dirname, 'routes', 'auth', 'auth.js'));
 
 // database initialization
 mongoose.connect(`${process.env.DB_HOST}${process.env.DB_PORT}/${process.env.DB_NAME}`, {
@@ -31,9 +32,14 @@ app.set('views', process.env.SERVER_VIEW_FOLDER);
 const serverPort = process.env.SERVER_PORT || 3000;
 
 // middleware
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// routes
+app.use('/blogger', bloggerRouter)
+app.use('/auth', authRouter)
 
 // running server
 app.listen(serverPort, () => {
