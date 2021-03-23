@@ -1,0 +1,44 @@
+{
+    "name": "blogger_project",
+    "version": "1.0.0",
+    "description": "This is a blogger project that you can post in it and read other posts and have some comments on it.",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ambaqinejad/Amir_Hosein_Baqinejad_Qazvini_hw19_maktab45.git"
+    },
+    "keywords": [
+        "express",
+        "session",
+        "authentication",
+        "authorization",
+        "mongodb",
+        "mongoose",
+        "nodejs",
+        "ejs",
+        "blogger",
+        "socail-network",
+        "cookie"
+    ],
+    "author": "Amir Hosein Baqinejad (ambaqinejad)",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ambaqinejad/Amir_Hosein_Baqinejad_Qazvini_hw19_maktab45/issues"
+    },
+    "homepage": "https://github.com/ambaqinejad/Amir_Hosein_Baqinejad_Qazvini_hw19_maktab45#readme",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "cookie-parser": "^1.4.5",
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "mongoose": "^5.12.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}
