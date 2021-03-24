@@ -2,7 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-const session = require('express-session')
+const expressSession = require('express-session');
 require('dotenv').config();
 
 // Nodejs modules
@@ -11,6 +11,7 @@ const path = require('path');
 // My own modules
 const dashboardRouter = require(path.join(__dirname, 'routes', 'dashboard.js'));
 const authRouter = require(path.join(__dirname, 'routes', 'auth', 'auth.js'));
+const session = require(path.join(__dirname, 'tools', 'session.js'));
 
 // database initialization
 mongoose.connect(`${process.env.DB_HOST}${process.env.DB_PORT}/${process.env.DB_NAME}`, {
@@ -37,11 +38,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app
+app.use(expressSession({
+    key: 'user_sid',
+    secret: 'mySecretKey',
+    saveUninitialized: false,
+    resave: false,
+    cookie: { expires: 600000 }
+}))
 
 // routes
-app.use('/dashboard', dashboardRouter)
-app.use('/auth', authRouter)
+app.use('/dashboard', session.loginChecker, dashboardRouter)
+app.use('/auth', session.sessionChecker, authRouter)
 
 // running server
 app.listen(serverPort, () => {

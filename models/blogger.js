@@ -32,11 +32,12 @@ const bloggerSchema = new Schema({
         enum: ['male', 'female'],
         default: 'male'
     },
-    profileImage: {
-        type: String,
-        trim: true,
-        unique: true
-    },
+    // profileImage: {
+    //     type: String,
+    //     trim: true,
+    //     unique: true,
+    //     default: `a_${Date.now()}`
+    // },
     phone: {
         type: String,
         required: [true, 'Phone number is required'],
@@ -47,8 +48,7 @@ const bloggerSchema = new Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        trim: true,
-        unique: true
+        trim: true
     },
     createdAt: {
         type: Date,

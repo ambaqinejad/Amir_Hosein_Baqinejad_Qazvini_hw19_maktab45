@@ -31,7 +31,8 @@ const loginProcess = (req, res, next) => {
             if (!same) {
                 return redirect(res, '/auth/signIn', 'User does not exist.');
             }
-            return res.send('OK')
+            req.session.blogger = blogger;
+            return res.redirect('/dashboard');
         })
     })
 }
