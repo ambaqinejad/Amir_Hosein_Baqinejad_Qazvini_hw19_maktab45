@@ -32,12 +32,7 @@ const bloggerSchema = new Schema({
         enum: ['male', 'female'],
         default: 'male'
     },
-    // profileImage: {
-    //     type: String,
-    //     trim: true,
-    //     unique: true,
-    //     default: `a_${Date.now()}`
-    // },
+    profileImage: String,
     phone: {
         type: String,
         required: [true, 'Phone number is required'],
@@ -69,6 +64,26 @@ bloggerSchema.pre('save', function(next) {
                 }
                 blogger.password = hash;
                 return next()
+            })
+        })
+    } else {
+        return next();
+    }
+})
+
+bloggerSchema.pre('updateOne', function(next) {
+    const info = this;
+    if (info._update.password) {
+        bcrypt.genSalt(10, (err, salt) => {
+            if (err) {
+                return next(err);
+            }
+            bcrypt.hash(info._update.password, salt, (err, hash) => {
+                if (err) {
+                    return next(err);
+                }
+                info._update.password = hash;
+                return next();
             })
         })
     } else {

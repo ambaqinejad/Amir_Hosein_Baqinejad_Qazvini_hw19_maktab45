@@ -13,17 +13,17 @@ const router = express.Router();
 router.use(express.static(path.join(process.cwd(), 'public')))
 
 router.post('/register',
-    validator.isNotEmpty('firstName'),
-    validator.isNotEmpty('lastName'),
-    validator.isNotEmpty('password'),
-    validator.isNotEmpty('username'),
-    validator.isNotEmpty('email'),
-    validator.isNotEmpty('phone'),
-    validator.isNotEmpty('gender'),
-    validator.isLength('password', { min: 6, max: 12 }),
-    validator.isEmail('email'),
-    validator.isLength('phone', { min: 10, max: 10 }),
-    validator.isNumber('phone'),
+    validator.isNotEmpty('firstName', '/auth/signUp'),
+    validator.isNotEmpty('lastName', '/auth/signUp'),
+    validator.isNotEmpty('password', '/auth/signUp'),
+    validator.isNotEmpty('username', '/auth/signUp'),
+    validator.isNotEmpty('email', '/auth/signUp'),
+    validator.isNotEmpty('phone', '/auth/signUp'),
+    validator.isNotEmpty('gender', '/auth/signUp'),
+    validator.isLength('password', { min: 6, max: 12 }, '/auth/signUp'),
+    validator.isEmail('email', '/auth/signUp'),
+    validator.isLength('phone', { min: 10, max: 10 }, '/auth/signUp'),
+    validator.isNumber('phone', '/auth/signUp'),
     signUpController.registrationProcess);
 
 router.get('/', signUpController.getSignUpPage)

@@ -11,6 +11,7 @@ const path = require('path');
 // My own modules
 const dashboardRouter = require(path.join(__dirname, 'routes', 'dashboard.js'));
 const authRouter = require(path.join(__dirname, 'routes', 'auth', 'auth.js'));
+const homeRouter = require(path.join(__dirname, 'routes', 'home.js'));
 const session = require(path.join(__dirname, 'tools', 'session.js'));
 
 // database initialization
@@ -49,6 +50,7 @@ app.use(expressSession({
 // routes
 app.use('/dashboard', session.loginChecker, dashboardRouter)
 app.use('/auth', session.sessionChecker, authRouter)
+app.use('/', homeRouter)
 
 // running server
 app.listen(serverPort, () => {

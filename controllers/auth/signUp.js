@@ -24,7 +24,8 @@ const registrationProcess = (req, res, next) => {
         if (blogger) {
             return redirect(res, '/auth/signUp', 'Username is already in use.');
         }
-        req.body.phone = `+98${req.body.phone}`
+        req.body.phone = `+98${req.body.phone}`;
+        req.body.profileImage = 'a'
         new Blogger(req.body).save((err => {
             if (err) {
                 return redirect(res, '/auth/signUp', 'Something went wrong.');

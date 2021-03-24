@@ -13,8 +13,8 @@ const router = express.Router();
 router.get('/', signInController.getSignInPage);
 
 router.post('/login',
-    validator.isNotEmpty('password'),
-    validator.isNotEmpty('username'),
+    validator.isNotEmpty('password', '/auth/signIn'),
+    validator.isNotEmpty('username', '/auth/signIn'),
     signInController.loginProcess);
 
 
