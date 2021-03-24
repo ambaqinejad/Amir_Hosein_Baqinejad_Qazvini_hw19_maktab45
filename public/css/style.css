@@ -1,9 +1,14 @@
-.p-m-0 {
-    margin: 0;
-    padding: 0;
+.display-none {
+    display: none
 }
 
-.form-border {
-    border: 2px solid black;
-    border-radius: 10px
+.c-pointer {
+    cursor: pointer;
 }
+
+
+/* .circle-border {
+    border: 1px solid rgb(219, 219, 219);
+    border-radius: 20%;
+    padding: 0 10px
+} */

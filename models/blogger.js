@@ -1,7 +1,8 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const bloggerSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
@@ -48,7 +49,31 @@ const userSchema = new Schema({
         required: [true, 'Email is required'],
         trim: true,
         unique: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 
-module.exports = mongoose.model('Blogger', userSchema);
+bloggerSchema.pre('save', function(next) {
+    const blogger = this;
+    if (blogger.isNew || blogger.isModified('password')) {
+        bcrypt.genSalt(10, (err, salt) => {
+            if (err) {
+                return next(err);
+            }
+            bcrypt.hash(blogger.password, salt, (err, hash) => {
+                if (err) {
+                    return next(err);
+                }
+                blogger.password = hash;
+                return next()
+            })
+        })
+    } else {
+        return next();
+    }
+})
+
+module.exports = mongoose.model('Blogger', bloggerSchema);

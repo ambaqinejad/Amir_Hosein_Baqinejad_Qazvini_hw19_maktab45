@@ -2,13 +2,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const session = require('express-session')
 require('dotenv').config();
 
 // Nodejs modules
 const path = require('path');
 
 // My own modules
-const bloggerRouter = require(path.join(__dirname, 'routes', 'blogger.js'));
+const dashboardRouter = require(path.join(__dirname, 'routes', 'dashboard.js'));
 const authRouter = require(path.join(__dirname, 'routes', 'auth', 'auth.js'));
 
 // database initialization
@@ -36,9 +37,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app
 
 // routes
-app.use('/blogger', bloggerRouter)
+app.use('/dashboard', dashboardRouter)
 app.use('/auth', authRouter)
 
 // running server

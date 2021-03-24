@@ -32,6 +32,10 @@ $(document).ready(function() {
         if (badPhoneLength()) {
             return false;
         }
+        if (phoneIsNaN()) {
+            return false;
+        }
+        return true;
     });
 });
 
@@ -116,6 +120,15 @@ const invalidEmail = () => {
     if (!re.test(email)) {
         $('#emailError').text('Please enter a valid email address.');
         $('#email').addClass('border border-danger');
+        return true;
+    }
+    return false;
+}
+
+const phoneIsNaN = () => {
+    if (isNaN(+phone)) {
+        $('#phoneError').text('Phone number must be digits.');
+        $('#phone').addClass('border border-danger');
         return true;
     }
     return false;

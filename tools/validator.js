@@ -1,52 +1,48 @@
-const someEmptyValues = (req, res, next) => {
-    if (!req.body.firstName.trim) {
+const path = require('path');
 
-    }
-    if (!lastName) {
+const redirect = require(path.join(__dirname, 'redirection.js'));
 
+const isNotEmpty = (elName) => {
+    return (req, res, next) => {
+        if (!req.body[elName]) {
+            return redirect(res, '/auth/signUp', `${elName} can not be empty.`);
+        }
+        return next();
     }
-    if (!password) {
-
-    }
-    if (!username) {
-
-    }
-    if (!email) {
-
-    }
-    if (!phone) {
-
-    }
-    if (!gender) {
-
-    }
-    return next();
 }
 
-const badPhoneLength = () => {
-    if (phone.length !== 10) {
-        $('#phoneError').text('Phone number must have 10 characters.');
-        $('#phone').addClass('border border-danger');
-        return true;
+const isLength = (elName, lengthObject) => {
+    return (req, res, next) => {
+        if (req.body[elName].length > lengthObject.max ||
+            req.body[elName].length < lengthObject.min) {
+            return redirect(res, '/auth/signUp', `${elName} length is invalid.`);
+        }
+        return next();
     }
-    return false;
 }
 
-const badPasswordLength = () => {
-    if (password.length > 12 || password.length < 6) {
-        $('#passwordError').text('Password must have at least 6 and at most 12 characters.');
-        $('#password').addClass('border border-danger');
-        return true;
+const isNumber = (elName) => {
+    return (req, res, next) => {
+        if (isNaN(+req.body[elName])) {
+            return redirect(res, '/auth/signUp', `${elName} must be digits.`);
+        }
+        return next();
     }
-    return false;
 }
 
-const invalidEmail = () => {
-    const re = /\S+@\S+\.\S+/;
-    if (!re.test(email)) {
-        $('#emailError').text('Please enter a valid email address.');
-        $('#email').addClass('border border-danger');
-        return true;
+const isEmail = (elName) => {
+    return (req, res, next) => {
+        const re = /\S+@\S+\.\S+/;
+        if (!re.test(req.body[elName])) {
+            return redirect(res, '/auth/signUp', 'Email is not valid.')
+        }
+        return next();
     }
-    return false;
+}
+
+module.exports = {
+    isNotEmpty,
+    isLength,
+    isEmail,
+    isNumber
 }
